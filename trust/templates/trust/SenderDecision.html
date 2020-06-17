@@ -6,7 +6,11 @@
 {% endblock %}
 
 {% block content %}
-{% formfields %}
+
+    <div class="alert alert-info">
+        You can send to another participant any amount from 0 to {{ player.endowment }}
+    </div>
+    {% formfields %}
     {% next_button %}
 
 {% endblock %}

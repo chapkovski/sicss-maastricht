@@ -6,6 +6,18 @@
 {% endblock %}
 
 {% block content %}
+    <div class="alert alert-info">
+        <div>
+            Another participant sent you {{ group.sender_decision }}
+        </div>
+        <div>
+            This amount was multiplied by {{ Constants.coef }}
+            so you received {{ group.multiplied_sender }}
+        </div>
+        <div>
+            You can send him/her back any amount from 0 to {{ group.multiplied_sender }}        </div>
+    </div>
+
     {% formfields %}
     {% next_button %}
 

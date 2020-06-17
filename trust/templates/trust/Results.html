@@ -2,11 +2,59 @@
 {% load otree static %}
 
 {% block title %}
-    Page title
+    Results
 {% endblock %}
 
 {% block content %}
-
+    <table class="table table-hover table-striped">
+        <tr>
+            <td>Your role was:</td>
+            <td>{{ player.role }}</td>
+        </tr>
+        <tr>
+            <td>Your endowment was:</td>
+            <td>{{ player.endowment }}</td>
+        </tr>
+        {% if  player.role == 'sender' %}
+            <tr>
+                <td>
+                    You decided to send to another participant
+                </td>
+                <td>
+                    {{ group.sender_decision }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    He/She sent you back
+                </td>
+                <td>
+                    {{ group.receiver_decision }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td>
+                    You received from another participant
+                </td>
+                <td>
+                    {{ group.multiplied_sender }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    and you sent him/her back:
+                </td>
+                <td>
+                    {{ group.receiver_decision }}
+                </td>
+            </tr>
+        {% endif %}
+        <tr class="table-success font-weight-bold">
+            <td>Your final payoff</td>
+            <td>{{ player.payoff }}</td>
+        </tr>
+    </table>
     {% next_button %}
 {% endblock %}
 
