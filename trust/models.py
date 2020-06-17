@@ -29,6 +29,9 @@ class Subsession(BaseSubsession):
         for p in self.get_players():
             p.endowment = Constants.endowment
 
+    def party_treatment(self):
+        return self.session.config.get('party_treatment')
+
 
 class Group(BaseGroup):
     sender_decision = models.CurrencyField(min=0)
@@ -53,6 +56,13 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     endowment = models.CurrencyField()
+
+    def other_party(self):
+        other = self.get_others_in_group()[0]
+        if other.participant.vars['democrat']:
+            return 'democrat'
+        else:
+            return 'republican'
 
     def role(self):
         if self.id_in_group == 1:

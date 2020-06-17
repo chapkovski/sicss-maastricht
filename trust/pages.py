@@ -7,7 +7,7 @@ class FirstWP(WaitPage):
     group_by_arrival_time = True
 
     def is_displayed(self):
-        return self.session.config.get('party_treatment')
+        return self.session.config.get('party_treatment', False)
 
     def get_players_for_group(self, waiting_players):
         democrats = [p for p in waiting_players if p.participant.vars['democrat']]

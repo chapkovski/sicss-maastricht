@@ -6,7 +6,11 @@
 {% endblock %}
 
 {% block content %}
-
+    {% if subsession.party_treatment %}
+        <div class="alert">
+            Your partner's party affiliation is: <b>{{ player.other_party }}</b>
+        </div>
+    {% endif %}
     <div class="alert alert-info">
         You can send to another participant any amount from 0 to {{ player.endowment }}
     </div>

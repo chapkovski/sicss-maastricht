@@ -6,6 +6,11 @@
 {% endblock %}
 
 {% block content %}
+    {% if subsession.party_treatment  %}
+        <div class="alert">
+            Your partner's party affiliation is: <b>{{ player.other_party }}</b>
+        </div>
+    {% endif %}
     <div class="alert alert-info">
         <div>
             Another participant sent you {{ group.sender_decision }}
