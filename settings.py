@@ -11,13 +11,25 @@ SESSION_CONFIG_DEFAULTS = dict(
 
 SESSION_CONFIGS = [
     dict(
-       name='trust',
-       display_name="Just Trust Game",
-       num_demo_participants=2,
-       app_sequence=['trust']
+        name='trust',
+        display_name="Just Trust Game",
+        num_demo_participants=2,
+        app_sequence=['trust']
+    ),
+    dict(
+        name='q',
+        display_name="Just Q",
+        num_demo_participants=1,
+        app_sequence=['q']
+    ),
+    dict(
+        name='full',
+        display_name="Q and Trust together",
+        num_demo_participants=2,
+        app_sequence=['q', 'trust'],
+        party_treatment=True,
     ),
 ]
-
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans

@@ -9,7 +9,6 @@ from otree.api import (
     currency_range,
 )
 
-
 author = 'Your name here'
 
 doc = """
@@ -32,4 +31,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    pass
+    democrat = models.BooleanField(
+        choices=[(False, 'Republican'), (True, 'Democrat')],
+        widget=widgets.RadioSelectHorizontal
+    )

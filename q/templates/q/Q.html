@@ -2,11 +2,11 @@
 {% load otree static %}
 
 {% block title %}
-    Page title
+    What is your party affiliation
 {% endblock %}
 
 {% block content %}
-
+    {% formfield player.democrat label='What is your party affiliation?' %}
     {% next_button %}
 
 {% endblock %}
