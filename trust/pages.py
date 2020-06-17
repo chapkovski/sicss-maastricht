@@ -19,9 +19,6 @@ class FirstWP(WaitPage):
         if len(undecided) == 0 and len(waiting_players) > 1:
             return waiting_players[:2]
 
-    def after_all_players_arrive(self):
-        print(self.group.get_players())
-
 
 class SenderDecision(Page):
     form_model = 'group'
