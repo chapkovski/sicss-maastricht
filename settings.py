@@ -45,7 +45,15 @@ ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable
 ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 
-DEMO_PAGE_INTRO_HTML = """ """
+DEMO_PAGE_INTRO_HTML = """ 
+<div class='bg-dark p-3'>
+<a href='https://compsocialscience.github.io/summer-institute/2020/maastricht/' target='_blank'> 
+<img src='https://compsocialscience.github.io/summer-institute/assets/images/sicss-logo.svg' >
+</a>
+
+</div>
+<div class='my-3 '><a href='https://github.com/chapkovski/sicss-maastricht' target='_blank'>Click here for the code</a></div>
+"""
 
 SECRET_KEY = 'cy=-*y3foj=t7twrak$yqu@)75+&=lof2tg!q#3uvvv3dy-ll4'
 
