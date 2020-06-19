@@ -7,4 +7,5 @@ import random
 
 class PlayerBot(Bot):
     def play_round(self):
+        """we randomly pick one of two possible options here for the bot"""
         yield pages.Q, dict(democrat=random.choice([True, False]))

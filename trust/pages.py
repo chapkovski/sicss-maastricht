@@ -32,12 +32,15 @@ class FirstWP(WaitPage):
         """
         democrats = [p for p in waiting_players if p.participant.vars['democrat']]
         republicans = [p for p in waiting_players if not p.participant.vars['democrat']]
+        """If there are enough participants to make D-R group we do it. """
         if len(democrats) > 1 and len(republicans) > 1:
-            return [democrats[0], republicans[0]]
+            return [republicans[0], democrats[0], ]
+        """If no one undecided left, we match participants into pairs regardless their affiliation"""
         undecided = [p for p in self.session.get_participants() if p.vars.get('democrat') is None]
-
         if len(undecided) == 0 and len(waiting_players) > 1:
             return waiting_players[:2]
+
+
 
 
 class SenderDecision(Page):
@@ -45,26 +48,39 @@ class SenderDecision(Page):
     form_fields = ['sender_decision']
 
     def is_displayed(self):
+        """This page is shown only to a sender"""
         return self.player.role() == 'sender'
 
 
 class AfterSenderWP(WaitPage):
+    """At this page a receiver  will wait for a Sender's decision.
+    As soon as all group members are here we calculate the multiplied amount so the receiver would know the
+    maximum amount he can send back.
+    """
     after_all_players_arrive = 'set_multiplied_amount'
 
 
 class ReceiverDecision(Page):
+    """This is a bit naive because actually if Sender did not send anything at all, there is no
+    sense to show this page to a receiver (if he gets nothing from Sender, he can't send anything back.
+    But for the sake of simplicity let's keep it like that.
+    """
     form_model = 'group'
     form_fields = ['receiver_decision']
 
     def is_displayed(self):
+        """This page is shown only to a sender"""
         return self.player.role() == 'receiver'
 
 
 class ResultsWaitPage(WaitPage):
+    """At this page a sender  will wait for a receiver's decision.
+    As soon as all members are here we calculate the payoffs of both members"""
     after_all_players_arrive = 'set_payoffs'
 
 
 class Results(Page):
+    """We show results here"""
     pass
 
 

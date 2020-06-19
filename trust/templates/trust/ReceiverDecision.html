@@ -2,12 +2,13 @@
 {% load otree static %}
 
 {% block title %}
-    Receiver Decision
+    Participant B -  Decision
 {% endblock %}
 
 {% block content %}
-    {% if subsession.party_treatment  %}
-        <div class="alert">
+    {% include 'trust/includes/instructions.html' %}
+    {% if subsession.party_treatment %}
+        <div class="alert alert-primary my-3">
             Your partner's party affiliation is: <b>{{ player.other_party }}</b>
         </div>
     {% endif %}
@@ -20,10 +21,11 @@
             so you received {{ group.multiplied_sender }}
         </div>
         <div>
-            You can send him/her back any amount from 0 to {{ group.multiplied_sender }}        </div>
+            You can send him/her back any amount from 0 to {{ group.multiplied_sender }}
+        </div>
     </div>
 
-    {% formfields %}
+    {% formfield player.receiver_decision %}
     {% next_button %}
 
 {% endblock %}

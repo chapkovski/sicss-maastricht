@@ -9,10 +9,11 @@ from otree.api import (
     currency_range,
 )
 
-author = 'Your name here'
+author = 'Philipp Chapkovski'
 
 doc = """
-Your app description
+This is a one-question app where we collect players' political affiliation so we can match them into
+Republican-Democrat pairs later.
 """
 
 
@@ -31,6 +32,8 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
+    """in the database just True/False value is stored (0/1). But we would like to show them as Democrat/Republican
+    choice, that's why we put the choices into parentheses (False, 'Republican') etc."""
     democrat = models.BooleanField(
         choices=[(False, 'Republican'), (True, 'Democrat')],
         widget=widgets.RadioSelectHorizontal

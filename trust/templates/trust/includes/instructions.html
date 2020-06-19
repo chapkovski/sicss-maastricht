@@ -1,0 +1,34 @@
+{% load otree %}
+{#SOURCE https://www.nature.com/articles/s41562-020-0878-x?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+nathumbehav%2Frss%2Fcurrent+%28Nature+Human+Behaviour%29&utm_content=Google+Feedfetcher#}
+<div class="card">
+    <div class="card-body">
+        <div>
+            There are two different participant roles: Participant A and Participant B.
+        </div>
+
+
+        <div>
+            Both participants, A and B, receive an initial endowment of {{ player.endowment }}
+            at the beginning of the interaction. Then Participant A makes a single decision to transfer part of the
+            initial
+            endowment to Participant B.
+        </div>
+        <div>
+            An amount transferred by Participant A to Participant B will be multiplied by {{ Constants.coef }}.
+            If, for example, Participant A transfers {{ 4|c }}, Participant B will
+            receive {{ 12|c }}, in addition to his initial endowment.
+        </div>
+        <div>
+            Participant B will be informed of the decision of Participant A after he or she has made it. Participant B
+            then has
+            the possibility of
+            transferring any amount of the received sum back to Participant A. This amount <b>will not be tripled</b>
+            for the
+            back transfer,
+            meaning that Participant A
+            will receive exactly the amount that Participant B transfers back to him or her.
+
+        </div>
+    </div>
+</div>
+

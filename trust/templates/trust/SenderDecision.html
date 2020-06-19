@@ -2,12 +2,13 @@
 {% load otree static %}
 
 {% block title %}
-    Sender Decision
+    Participant A -  Decision
 {% endblock %}
 
 {% block content %}
+    {% include 'trust/includes/instructions.html' %}
     {% if subsession.party_treatment %}
-        <div class="alert">
+        <div class="alert alert-primary my-3">
             Your partner's party affiliation is: <b>{{ player.other_party }}</b>
         </div>
     {% endif %}
