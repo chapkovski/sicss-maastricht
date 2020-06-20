@@ -2,20 +2,20 @@
 {% load otree static %}
 
 {% block title %}
-    Participant A -  Decision
+
 {% endblock %}
 
 {% block content %}
-    {% include 'trust/includes/instructions.html' %}
+    {% include 'trust/includes/role_block.html' %}
     {% if subsession.party_treatment %}
         <div class="alert alert-primary my-3">
             Your partner's party affiliation is: <b>{{ player.other_party }}</b>
         </div>
     {% endif %}
-    <div class="alert alert-info">
-        You can send to another participant any amount from 0 to {{ player.endowment }}
-    </div>
-    {% formfields %}
+    <h6>
+        How many points you would like to send  to {{ player.other.role_desc }} (from 0 to {{ group.sender_decision_max }})?
+    </h6>
+    {% formfield group.sender_decision label='' %}
     {% next_button %}
 
 {% endblock %}

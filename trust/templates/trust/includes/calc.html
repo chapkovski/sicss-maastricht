@@ -1,0 +1,146 @@
+{% load otree %}
+<div class="container" id='{{ vue_app_id }}' v-cloak>
+    <div class="row">
+        <div class="col d-flex justify-content-center flex-column">
+            <div class="form-group d-flex justify-content-center flex-column align-items-center" v-if='!initialK'>
+
+                <label class="col-form-label" for="id_k_declare_0">Выберите для примера истинное значение коэффициента
+                    К:</label>
+                <div class="controls  d-flex flex-row">
+
+                    <div class="form-check form-check-inline" v-for='(i, ind) in  KChoices'>
+
+                        <button :class="getBtnCls(i)" role="button" type="button" :data-value="i"
+                                v-model='trueK' @click="trueK=i"
+                        >
+                            [[i]]
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div v-if="trueK">
+
+
+                <div class="form-group d-flex justify-content-center flex-column align-items-center">
+
+                    <label class="col-form-label" for="id_k_declare_0">{{ k_declare_text }}:</label>
+                    <div class="controls  field-k_declare d-flex">
+
+                        <div class="form-check form-check-inline" v-for='(i, ind) in  KDchoices'>
+                            <button :class="getDBtnCls(i)" role="button" type="button" :data-value="i"
+                                    v-model='declaredK' @click="declaredK=i"
+                            >
+                                [[i]]
+                            </button>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <input type="hidden" name="k_declare" :value="getKforOtree()"/>
+                <div v-if='declaredK'>
+                    <table class="table table-striped table-hover">
+                        <tr>
+                            <td>{{ citizen_payoff_text }}</td>
+                            <td>[[citizenPayoff()]]</td>
+                        </tr>
+                        <tr>
+                            <td> {{ officer_payoff_no_text }}</td>
+                            <td> [[officerPayoffNo()]]</td>
+                        </tr>
+                        <tr>
+                            <td> {{ officer_payoff_yes_text }}</td>
+                            <td> [[officerPayoffYes()]]</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+<script>
+    var app = new Vue({
+        el: "#{{ vue_app_id }}",
+        data() {
+            return {
+                initialK: {{initial_k|default_if_none:None|json}},
+                KChoices: {{Constants.K_CHOICES|json}},
+                trueK: null,
+                totalTaxesPaid: 1,
+                declaredK: null,
+                btnClassObject: {
+                    'btn-outline-primary': true,
+                    'btn btn-sm ': true,
+                }
+            };
+        },
+        created() {
+            this.trueK = this.initialK
+        },
+        computed: {
+            kDiff() {
+                return this.trueK - this.declaredK;
+            },
+            KDchoices() {
+                return _.map(_.range(1, this.trueK + 0.001, {{Constants.k_step|json}}), (i) => _.round(i, 2));
+            }
+        },
+        methods: {
+            getKforOtree() {
+                if (this.declaredK === undefined || this.declaredK === null) {
+                    return ''
+                } else {
+                    return Number.parseFloat(this.declaredK).toFixed(2)
+                }
+
+
+            },
+            getBtnCls(i) {
+                clsObj = {...this.btnClassObject};
+
+                if (i === this.trueK) {
+                    clsObj['btn-outline-primary'] = false;
+                    clsObj['btn-danger'] = true;
+                }
+                return {...clsObj,};
+            },
+            getDBtnCls(i) {
+                clsObj = {...this.btnClassObject};
+
+                if (i === this.declaredK) {
+                    clsObj['btn-outline-primary'] = false;
+                    clsObj['btn-danger'] = true;
+                }
+                return {...clsObj,};
+            },
+            citizenBonusDiff() {
+                return (this.kDiff * this.totalTaxesPaid) / 2;
+            },
+            officerBonusDiff() {
+                return this.kDiff * this.totalTaxesPaid;
+            },
+            officerPayoffNo() {
+                return 10 - 5 + this.kDiff * this.totalTaxesPaid + (this.declaredK * this.totalTaxesPaid) / 2;
+            },
+            officerPayoffYes() {
+                return 10 - 5 + this.kDiff * this.totalTaxesPaid + (this.declaredK * this.totalTaxesPaid) / 2 - this.kDiff * this.totalTaxesPaid * 3 / 2;
+            },
+            citizenPayoff() {
+                return 10 - 5 + (this.declaredK * this.totalTaxesPaid) / 2;
+            },
+            officerfine() {
+                return this.kDiff * this.totalTaxesPaid * 3 / 2;
+            }
+        },
+        delimiters: ["[[", "]]"]
+    });
+
+</script>

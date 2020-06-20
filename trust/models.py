@@ -22,6 +22,7 @@ class Constants(BaseConstants):
     num_rounds = 1
     coef = 3
     endowment = 10
+    roles = dict(sender='Participant A', receiver='Participant B')
 
 
 class Subsession(BaseSubsession):
@@ -70,15 +71,20 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     endowment = models.CurrencyField()
-
+    @property
+    def other(self):
+        return  self.get_others_in_group()[0]
     def other_party(self):
         """We get the other player's affiliation here. It is not the most elegant way for many reasons,
         but the simplest one. (see more on that in Django docs on get_FIELD_display"""
-        other = self.get_others_in_group()[0]
-        if other.participant.vars['democrat']:
+
+        if self.other.participant.vars['democrat']:
             return 'democrat'
         else:
             return 'republican'
+
+    def role_desc(self):
+        return Constants.roles[self.role()]
 
     def role(self):
         """Since they get assign into groups dynamically we guarantee here that the roles will be assigned

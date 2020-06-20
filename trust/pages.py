@@ -1,5 +1,6 @@
 from otree.api import Currency as c, currency_range
-from ._builtin import Page, WaitPage
+from ._builtin import WaitPage
+from .generic_pages import Page
 from .models import Constants
 
 
@@ -41,11 +42,14 @@ class FirstWP(WaitPage):
             return waiting_players[:2]
 
 
+class Intro(Page):
+    show_instructions = True
 
 
 class SenderDecision(Page):
     form_model = 'group'
     form_fields = ['sender_decision']
+    show_instructions = True
 
     def is_displayed(self):
         """This page is shown only to a sender"""
@@ -67,6 +71,7 @@ class ReceiverDecision(Page):
     """
     form_model = 'group'
     form_fields = ['receiver_decision']
+    show_instructions = True
 
     def is_displayed(self):
         """This page is shown only to a sender"""
@@ -86,6 +91,7 @@ class Results(Page):
 
 page_sequence = [
     FirstWP,
+    Intro,
     SenderDecision,
     AfterSenderWP,
     ReceiverDecision,

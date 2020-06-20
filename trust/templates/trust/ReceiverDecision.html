@@ -2,11 +2,11 @@
 {% load otree static %}
 
 {% block title %}
-    Participant B -  Decision
+
 {% endblock %}
 
 {% block content %}
-    {% include 'trust/includes/instructions.html' %}
+    {% include 'trust/includes/role_block.html' %}
     {% if subsession.party_treatment %}
         <div class="alert alert-primary my-3">
             Your partner's party affiliation is: <b>{{ player.other_party }}</b>
@@ -14,18 +14,19 @@
     {% endif %}
     <div class="alert alert-info">
         <div>
-            Another participant sent you {{ group.sender_decision }}
+            Another participant sent you {{ group.sender_decision }}.
         </div>
         <div>
             This amount was multiplied by {{ Constants.coef }}
-            so you received {{ group.multiplied_sender }}
+            so you received {{ group.multiplied_sender }}.
         </div>
         <div>
-            You can send him/her back any amount from 0 to {{ group.multiplied_sender }}
+            You can send him/her back any amount from 0 to {{ group.multiplied_sender }}.
         </div>
     </div>
-
-    {% formfield player.receiver_decision %}
+<h6>How many points you would like to send back to {{ player.other.role_desc }} (from 0 to
+        {{ group.receiver_decision_max|c }})?</h6>
+    {% formfield group.receiver_decision label='' %}
     {% next_button %}
 
 {% endblock %}

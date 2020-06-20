@@ -7,6 +7,7 @@ import random
 
 class PlayerBot(Bot):
     def play_round(self):
+        yield pages.Intro,
         if self.player.role() == 'sender':
             """We randomly select a possible sender's decision"""
             yield pages.SenderDecision,\

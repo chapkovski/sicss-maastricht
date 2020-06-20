@@ -1,0 +1,25 @@
+{% load otree i18n %}
+<div class="card my-3">
+    <div class="card-body">
+        <div class="media">
+           <img src="{% static 'global/img/hse_logo.jpg' %}" class="align-self-center  " alt="hse_logo"
+                 style="width: 200px; height:auto;">
+            <div class="media-body  ">
+
+
+                <p>This study is conducted by the researchers from
+                    <a href="http://www.hse.ru">Higher School of Economics, Moscow</a>.
+
+                </p>
+                <p> {% blocktrans %}If you encounter any technical issues, please contact us via
+                    email
+                {% endblocktrans %}
+                    <a href="mailto:fchapkovskiy@hse.ru">lab-icef@hse.ru</a>.
+                </p>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
