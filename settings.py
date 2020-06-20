@@ -1,4 +1,5 @@
 from os import environ
+import os
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
 # in SESSION_CONFIGS, except those that explicitly override it.
@@ -58,4 +59,20 @@ DEMO_PAGE_INTRO_HTML = """
 SECRET_KEY = 'cy=-*y3foj=t7twrak$yqu@)75+&=lof2tg!q#3uvvv3dy-ll4'
 
 # if an app is included in SESSION_CONFIGS, you don't need to list it here
-INSTALLED_APPS = ['otree']
+INSTALLED_APPS = [
+    'otree',
+    'webpack_loader',
+]
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+VUE_FRONTEND_DIR = os.path.join(BASE_DIR, 'vue_frontend')
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        # 'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'vue/',  # must end with slash
+        'STATS_FILE': os.path.join(BASE_DIR, 'calc', 'webpack-stats.json'),
+        'POLL_INTERVAL': 0.3,
+        'TIMEOUT': None,
+        'IGNORE': [r'.+\.hot-update.js', r'.+\.map']
+    }
+}
