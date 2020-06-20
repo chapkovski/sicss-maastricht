@@ -2,10 +2,10 @@
   <vue-slider
     ref="slider"
     v-model="value"
-    :marks="true"
+    :marks="marks"
     :min="parseInt(sliderMin)"
     :max="parseInt(sliderMax)"
-    :interval="sliderInt"
+
     @change="pushval"
   />
 </template>
@@ -27,7 +27,8 @@ export default {
   props: ["sliderMax", "sliderMin", "sliderInt"],
   data() {
     return {
-      value: 0
+      value: 0,
+       marks: val => val % (this.sliderInt||1) === 0,
     };
   },
   watch: {
