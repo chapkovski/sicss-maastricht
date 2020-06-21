@@ -12,21 +12,63 @@
             Your partner's party affiliation is: <b>{{ player.other_party }}</b>
         </div>
     {% endif %}
-    <div class="alert alert-info">
-        <div>
-            Another participant sent you {{ group.sender_decision }}.
-        </div>
-        <div>
-            This amount was multiplied by {{ Constants.coef }}
-            so you received {{ group.multiplied_sender }}.
-        </div>
-        <div>
-            You can send him/her back any amount from 0 to {{ group.multiplied_sender }}.
-        </div>
-    </div>
-<h6>How many points you would like to send back to {{ player.other.role_desc }} (from 0 to
+    <table class="table table-hover table-striped">
+        <tr>
+            <td> {{ player.other.role_desc }} sent you</td>
+            <td>{{ group.sender_decision }}</td>
+        </tr>
+        <tr>
+            <td> This amount was multiplied by</td>
+            <td>{{ Constants.coef }}</td>
+        </tr>
+        <tr>
+            <td> so you received</td>
+            <td>   {{ group.multiplied_sender }}.</td>
+        </tr>
+    </table>
+
+    </table>
+
+    <h6>How many points you would like to send back to {{ player.other.role_desc }} (from 0 to
         {{ group.receiver_decision_max|c }})?</h6>
     {% formfield group.receiver_decision label='' %}
+    <table class="table table-hover table-striped">
+        <tr>
+            <td> Your ({{ player.role_desc }}) payoff:</td>
+            <th><span id="receiver_payoff"></span></th>
+        </tr>
+        <tr>
+            <td> {{ player.other.role_desc }}'s payoff:</td>
+            <th><span id="sender_payoff"></span>
+        </tr>
+
+    </table>
+    <script>
+        const endowment = {{ player.endowment|json }};
+        const sender_decision = {{ group.sender_decision|json }};
+        const max_possible ={{ group.receiver_decision_max|json }};
+        const $sender = $('#receiver_payoff')
+        const $receiver = $('#sender_payoff')
+
+        $('#id_receiver_decision').on('input', function (e) {
+            let curval = this.value;
+            if (curval > max_possible) {
+                this.value = max_possible
+            } else if (curval < 0) {
+                this.value = 0
+            }
+
+            if (this.value == '') {
+                $sender.html('')
+                $receiver.html('')
+            } else {
+                $sender.html((endowment + max_possible - parseInt(this.value)) + ' points')
+                $receiver.html((endowment - sender_decision + parseInt(this.value)) + ' points')
+            }
+
+        })
+    </script>
+
     {% next_button %}
 
 {% endblock %}

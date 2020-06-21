@@ -13,9 +13,68 @@
         </div>
     {% endif %}
     <h6>
-        How many points you would like to send  to {{ player.other.role_desc }} (from 0 to {{ group.sender_decision_max }})?
+        How many points you would like to send to {{ player.other.role_desc }} (from 0
+        to {{ group.sender_decision_max }})?
     </h6>
     {% formfield group.sender_decision label='' %}
+
+    <div class="d-flex ">
+        <div class="d-flex flex-column ">
+            <h6>
+                {{ player.other.role_desc }} will get:
+            </h6>
+            <div class="form-group ">
+                <div class="controls  field-result">
+                    <div class="input-group input-group-narrow">
+                        <input type="number" disabled id="result" class="form-control" value="">
+
+                        <div class="input-group-append">
+                            <span class="input-group-text">points</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-column mx-3">
+            <h6>
+                Endowment left:
+            </h6>
+            <div class="form-group  ">
+                <div class="controls  field-endo">
+                    <div class="input-group input-group-narrow">
+                        <input type="number" disabled id="endowment" class="form-control"
+                               value="{{ player.endowment|json }}">
+
+                        <div class="input-group-append">
+                            <span class="input-group-text">points</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const endowment =
+        {{ player.endowment|json }}
+        const coef =
+        {{ Constants.coef|json }}
+        const $endowment = $('#endowment')
+        const $multiplied = $('#result')
+        $('#id_sender_decision').on('input', function (e) {
+            let curval = this.value;
+            if (curval > endowment) {
+                this.value = endowment
+            } else if (curval < 0) {
+                this.value = 0
+            }
+            $endowment.val(endowment - e.target.value)
+            if (e.target.value === '') {
+                $multiplied.val('')
+            } else {
+                $multiplied.val(e.target.value * coef);
+            }
+        })
+    </script>
     {% next_button %}
 
 {% endblock %}
