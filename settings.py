@@ -25,10 +25,17 @@ SESSION_CONFIGS = [
     ),
     dict(
         name='full',
-        display_name="Q and Trust together",
+        display_name="Q and Trust together - Party treatment",
         num_demo_participants=2,
         app_sequence=['q', 'trust'],
         party_treatment=True,
+    ),
+    dict(
+        name='full_no',
+        display_name="Q and Trust together - baseline",
+        num_demo_participants=2,
+        app_sequence=['q', 'trust'],
+        party_treatment=False,
     ),
 ]
 
