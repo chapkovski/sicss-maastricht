@@ -1,35 +1,38 @@
 <template>
   <div id="app">
-  <h6>Choose Participant A decision:</h6>
+    <h6>Choose Participant A decision:</h6>
     <div class="slider-wrapper">
       <Slider
         sliderMin="0"
         :sliderMax="endowment"
         :sliderInt="1"
-        @change-slider="senderval=$event;receiverval=0; initialRecVal=0"
+        @change-slider="senderval = $event"
       />
     </div>
     <h6>Choose Participant B decision:</h6>
-    <div class="slider-wrapper" v-if="senderval !=='null'">
+    <div class="slider-wrapper" >
       <Slider
         sliderMin="0"
         :initialVal="initialRecVal"
         :sliderMax="multiplied_amount"
         :sliderInt="coef"
-        @change-slider="receiverval=$event"
+        @change-slider="receiverval = $event"
       />
     </div>
 
-    <hr>
+    <hr />
 
-    <div class="my-3">Multiplied amount: {{multiplied_amount}}</div>
+    <div class="my-3">Multiplied amount: {{ multiplied_amount }}</div>
 
-    <div
-      class="my-3"
-    >Sender payoff: {{endowment}} - {{senderval}} + {{receiverval}} =<b> {{sender_payoff}} points</b></div>
-    <div
-      class="my-3"
-    >Receiver payoff: {{endowment}} + {{multiplied_amount}} - {{receiverval}} =<b> {{receiver_payoff}} points</b></div>
+    <div class="my-3">
+      Sender payoff: {{ endowment }} - {{ senderval }} + {{ receiverval }} =<b>
+        {{ sender_payoff }} points</b
+      >
+    </div>
+    <div class="my-3">
+      Receiver payoff: {{ endowment }} + {{ multiplied_amount }} -
+      {{ receiverval }} =<b> {{ receiver_payoff }} points</b>
+    </div>
   </div>
 </template>
 
@@ -39,7 +42,7 @@ import Slider from "./components/Slider";
 export default {
   name: "App",
   components: {
-    Slider
+    Slider,
   },
   computed: {
     multiplied_amount() {
@@ -50,7 +53,7 @@ export default {
     },
     receiver_payoff() {
       return this.endowment + this.multiplied_amount - this.receiverval;
-    }
+    },
   },
   data() {
     return {
@@ -58,9 +61,9 @@ export default {
       coef: 3,
       senderval: 0,
       receiverval: 0,
-      initialRecVal: 0
+      initialRecVal: 0,
     };
-  }
+  },
 };
 </script>
 
